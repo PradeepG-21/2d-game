@@ -1,48 +1,20 @@
 package GameEngine;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+@Getter
+@Setter
 
 public class KeyHandler implements KeyListener {
 
     private boolean isUpPressed, isDownPressed, isLeftPressed, isRightPressed;
 
-    public boolean isUpPressed() {
-        return isUpPressed;
-    }
-
-    public void setUpPressed(boolean upPressed) {
-        isUpPressed = upPressed;
-    }
-
-    public boolean isDownPressed() {
-        return isDownPressed;
-    }
-
-    public void setDownPressed(boolean downPressed) {
-        isDownPressed = downPressed;
-    }
-
-    public boolean isLeftPressed() {
-        return isLeftPressed;
-    }
-
-    public void setLeftPressed(boolean leftPressed) {
-        isLeftPressed = leftPressed;
-    }
-
-    public boolean isRightPressed() {
-        return isRightPressed;
-    }
-
-    public void setRightPressed(boolean rightPressed) {
-        isRightPressed = rightPressed;
-    }
-
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {

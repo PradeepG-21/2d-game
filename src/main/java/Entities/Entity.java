@@ -71,17 +71,13 @@ public abstract class Entity {
     }
 
     BufferedImage getEntityImage(String direction) {
-        switch(direction) {
-            case "UP":
-                return up1;
-            case "DOWN":
-                return down1;
-            case "LEFT":
-                return left1;
-            case "RIGHT":
-                return right1;
-        }
-        return down1;
+        return switch (direction) {
+            case "UP" -> up1;
+            case "DOWN" -> down1;
+            case "LEFT" -> left1;
+            case "RIGHT" -> right1;
+            default -> down1;
+        };
     }
 
     public abstract void getImages();

@@ -2,7 +2,6 @@ package GameEngine;
 
 import Entities.Entity;
 import Entities.Player;
-import Entities.RectangleKun;
 import lombok.Getter;
 
 import javax.swing.*;
