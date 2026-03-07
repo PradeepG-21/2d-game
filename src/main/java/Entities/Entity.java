@@ -1,5 +1,6 @@
 package Entities;
 
+import GameEngine.GameConstants;
 import GameEngine.GamePanel;
 import GameEngine.KeyHandler;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public abstract class Entity {
         this.speed = speed;
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
-        this.tileSize = gamePanel.getTileSize();
+        this.tileSize = GameConstants.tileSize;
     }
 
     public void update() {

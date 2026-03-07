@@ -2,33 +2,27 @@ package GameEngine;
 
 import Entities.Entity;
 import Entities.Player;
-import lombok.Getter;
+import Map.MapManager;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable{
-    final int originalTileSize = 16;
-    final int scale = 3;
-    @Getter
-    final int tileSize = originalTileSize * scale;
-    final int maxScreenCols = 16;
-    final int maxScreenRows = 12;
-    final int screenWidth = maxScreenCols * tileSize;
-    final int screenHeight = maxScreenRows * tileSize;
-    final int FPS = 60;
 
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
+    MapManager mapManager = new MapManager();
+    Graphics2D g2;
 
     Entity player = new Player(this, keyHandler);
 
     public GamePanel() {
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+        setPreferredSize(new Dimension(GameConstants.screenWidth, GameConstants.screenHeight));
         setBackground(Color.BLACK);
         setDoubleBuffered(true);
         addKeyListener(keyHandler);
         setFocusable(true);
+        initializeGame();
     }
 
     public void startGameThread() {
@@ -39,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run() {
         // Creating the game loop
-        double drawInterval = (double) 1000000000 / FPS;
+        double drawInterval = (double) 1000000000 / GameConstants.FPS;
         long previousTime = System.nanoTime();
         long currentTime;
         double delta = 0;
@@ -67,11 +61,13 @@ public class GamePanel extends JPanel implements Runnable{
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+        g2 = (Graphics2D) g;
 
+        mapManager.renderMap(g2);
         player.draw(g2);
-
-        g2.dispose();
     }
 
+    private void initializeGame() {
+        mapManager.loadMap("Maps/map1.txt");
+    }
 }
