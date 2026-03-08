@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 public abstract class Entity {
     private int tileSize;
 
+    private int worldX;
+    private int worldY;
     private int xPosition;
     private int yPosition;
     private int speed;
@@ -28,8 +30,8 @@ public abstract class Entity {
 
 
     public Entity(int xPosition, int yPosition, int speed, GamePanel gamePanel, KeyHandler keyHandler) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        this.worldX = xPosition;
+        this.worldY = yPosition;
         this.speed = speed;
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;

@@ -8,8 +8,8 @@ public class MapManager {
     @Getter @Setter
     GameMap currentMap;
 
-    public void renderMap(Graphics2D g2) {
-        MapRenderer.renderMap(currentMap, g2);
+    public void renderMap(Graphics2D g2, int playerWorldX, int playerWorldY) {
+        MapRenderer.renderMap(currentMap, playerWorldX, playerWorldY, g2);
     }
 
     public void loadMap(String mapPath) {

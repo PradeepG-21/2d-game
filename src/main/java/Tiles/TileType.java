@@ -10,9 +10,12 @@ import java.util.Objects;
 @Getter
 
 public enum TileType {
+    DUMMY(loadImage("Tiles/grass_short.png"), false),
     GRASS_SHORT(loadImage("Tiles/grass_short.png"), false),
-    WALL(loadImage("Tiles/wall.png"), true),
-    GRASS_LONG(loadImage("Tiles/grass.png"), false);
+    GRASS_LONG(loadImage("Tiles/grass.png"), false),
+    TREE(loadImage("Tiles/tree_01.png"), false),
+    ROAD(loadImage("Tiles/road_02.png"), false),
+    WALL(loadImage("Tiles/wall.png"), true);
 
     private final BufferedImage tileImage;
     private final boolean collision;

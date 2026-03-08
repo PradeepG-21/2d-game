@@ -63,11 +63,11 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         g2 = (Graphics2D) g;
 
-        mapManager.renderMap(g2);
+        mapManager.renderMap(g2, player.getWorldX(), player.getWorldY());
         player.draw(g2);
     }
 
     private void initializeGame() {
-        mapManager.loadMap("Maps/map1.txt");
+        mapManager.loadMap("Maps/map.txt");
     }
 }

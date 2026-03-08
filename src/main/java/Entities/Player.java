@@ -1,5 +1,6 @@
 package Entities;
 
+import GameEngine.GameConstants;
 import GameEngine.GamePanel;
 import GameEngine.KeyHandler;
 import lombok.Getter;
@@ -24,6 +25,8 @@ public class Player extends Entity{
         imagePath = EntityConstants.DEFAULT_PLAYER_RESOURCES_PATH;
         readEntityImages();
         setDirection("DOWN");
+        setXPosition(GameConstants.screenWidth / 2 - (GameConstants.tileSize/2));
+        setYPosition(GameConstants.screenHeight/2 - (GameConstants.tileSize/2));
     }
 
     @Override
@@ -59,19 +62,19 @@ public class Player extends Entity{
         if(keyHandler.isPressed()) frameCounter++;
 
         if(keyHandler.isUpPressed()) {
-            setYPosition(getYPosition() - getSpeed());
+            setWorldY(getWorldY() - getSpeed());
             direction = "UP";
         }
         else if(keyHandler.isDownPressed()) {
-            setYPosition(getYPosition() + getSpeed());
+            setWorldY(getWorldY() + getSpeed());
             direction = "DOWN";
         }
         else if(keyHandler.isRightPressed()) {
-            setXPosition(getXPosition() + getSpeed());
+            setWorldX(getWorldX() + getSpeed());
             direction = "RIGHT";
         }
         else if(keyHandler.isLeftPressed()) {
-            setXPosition(getXPosition() - getSpeed());
+            setWorldX(getWorldX() - getSpeed());
             direction = "LEFT";
         }
 
