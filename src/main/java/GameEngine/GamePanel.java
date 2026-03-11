@@ -7,7 +7,11 @@ import Map.MapManager;
 import javax.swing.*;
 import java.awt.*;
 
+import static GameEngine.GameConstants.TILE_SIZE;
+
 public class GamePanel extends JPanel implements Runnable{
+
+    public String gameMode = GameConstants.GAME_MODE_PROD;
 
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
@@ -17,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable{
     Entity player = new Player(this, keyHandler);
 
     public GamePanel() {
-        setPreferredSize(new Dimension(GameConstants.screenWidth, GameConstants.screenHeight));
+        setPreferredSize(new Dimension(GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT));
         setBackground(Color.BLACK);
         setDoubleBuffered(true);
         addKeyListener(keyHandler);
@@ -65,9 +69,28 @@ public class GamePanel extends JPanel implements Runnable{
 
         mapManager.renderMap(g2, player.getWorldX(), player.getWorldY());
         player.draw(g2);
+
+        if(gameMode.equals(GameConstants.GAME_MODE_DEV)) drawScreenGrid(g2);
     }
 
     private void initializeGame() {
         mapManager.loadMap("Maps/map.txt");
+        CollisionChecker.mapManager = mapManager;
+        CollisionChecker.tileTypes = mapManager.getTILE_TYPES();
+    }
+
+    private void drawScreenGrid(Graphics2D g2) {
+        for(int col = 0; col < mapManager.getCurrentMap().getNumCols(); col++) {
+            for(int row = 0; row < mapManager.getCurrentMap().getNumRows(); row++) {
+
+                int worldX = col * TILE_SIZE;
+                int worldY = row * TILE_SIZE;
+
+                int screenX = worldX - player.getWorldX() + player.getXPosition();
+                int screenY = worldY - player.getWorldY() + player.getYPosition();
+
+                g2.drawRect(screenX, screenY, TILE_SIZE, TILE_SIZE);
+            }
+        }
     }
 }

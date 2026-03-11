@@ -24,18 +24,21 @@ public abstract class Entity {
     KeyHandler keyHandler;
 
     String direction;
+    private Rectangle collisionArea;
+    boolean collision = false;
 
     int frameCounter = 0;
     int imageVersion = 1;
 
 
-    public Entity(int xPosition, int yPosition, int speed, GamePanel gamePanel, KeyHandler keyHandler) {
+    public Entity(int xPosition, int yPosition, int speed, Rectangle collisionArea, GamePanel gamePanel, KeyHandler keyHandler) {
         this.worldX = xPosition;
         this.worldY = yPosition;
         this.speed = speed;
+        this.collisionArea = collisionArea;
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
-        this.tileSize = GameConstants.tileSize;
+        this.tileSize = GameConstants.TILE_SIZE;
     }
 
     public void update() {
@@ -49,4 +52,12 @@ public abstract class Entity {
     public abstract BufferedImage getEntityImage(String direction);
 
     public abstract void readEntityImages();
+
+    public void renderCollisionArea(Graphics2D g2) {
+        g2.draw(new Rectangle(
+                getXPosition() + getCollisionArea().x,
+                getYPosition() + getCollisionArea().y,
+                getCollisionArea().width,
+                getCollisionArea().height));
+    }
 }

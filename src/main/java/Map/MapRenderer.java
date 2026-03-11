@@ -14,15 +14,15 @@ public class MapRenderer {
 
         int[][] map = gameMap.getGameMap();
 
-        int cameraX = playerWorldX - GameConstants.screenWidth / 2;
-        int cameraY = playerWorldY - GameConstants.screenHeight / 2;
+        int cameraX = playerWorldX - GameConstants.SCREEN_WIDTH / 2 + GameConstants.TILE_SIZE / 2;
+        int cameraY = playerWorldY - GameConstants.SCREEN_HEIGHT / 2 + GameConstants.TILE_SIZE / 2;
 
         // Adding extra tiles off camera to avoid blank tiles for partially visible tiles
-        int leftTileIndex = cameraX / GameConstants.tileSize - 1;
-        int topTileIndex = cameraY / GameConstants.tileSize - 1;
+        int leftTileIndex = cameraX / GameConstants.TILE_SIZE - 1;
+        int topTileIndex = cameraY / GameConstants.TILE_SIZE - 1;
 
-        int rightTileIndex = leftTileIndex + GameConstants.maxScreenCols + 2;
-        int bottomTileIndex = topTileIndex + GameConstants.maxScreenRows + 2;
+        int rightTileIndex = leftTileIndex + GameConstants.MAX_SCREEN_COLS + 2;
+        int bottomTileIndex = topTileIndex + GameConstants.MAX_SCREEN_ROWS + 2;
 
         leftTileIndex = Math.max(0, leftTileIndex);
         topTileIndex = Math.max(0, topTileIndex);
@@ -35,8 +35,8 @@ public class MapRenderer {
 
                 int tileId = map[i][j];
 
-                int worldX = j * GameConstants.tileSize;
-                int worldY = i * GameConstants.tileSize;
+                int worldX = j * GameConstants.TILE_SIZE;
+                int worldY = i * GameConstants.TILE_SIZE;
 
                 int screenX = worldX - cameraX;
                 int screenY = worldY - cameraY;

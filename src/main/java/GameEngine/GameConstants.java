@@ -2,13 +2,16 @@ package GameEngine;
 
 public class GameConstants {
 
-    public static final int originalTileSize = 16;
-    public static final int scale = 3;
-    public static final int tileSize = originalTileSize * scale;
-    public static final int maxScreenCols = 16;
-    public static final int maxScreenRows = 12;
-    public static final int screenWidth = maxScreenCols * tileSize;
-    public static final int screenHeight = maxScreenRows * tileSize;
+    public static final int ORIGINAL_TILE_SIZE = 16;
+    public static final int SCALE = 3;
+    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE;
+    public static final int MAX_SCREEN_COLS = 16;
+    public static final int MAX_SCREEN_ROWS = 12;
+    public static final int SCREEN_WIDTH = MAX_SCREEN_COLS * TILE_SIZE;
+    public static final int SCREEN_HEIGHT = MAX_SCREEN_ROWS * TILE_SIZE;
     public static final int FPS = 60;
 
+
+    public static final String GAME_MODE_DEV = "DEV";
+    public static final String GAME_MODE_PROD = "PROD";
 }

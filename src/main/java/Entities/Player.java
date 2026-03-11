@@ -1,5 +1,6 @@
 package Entities;
 
+import GameEngine.CollisionChecker;
 import GameEngine.GameConstants;
 import GameEngine.GamePanel;
 import GameEngine.KeyHandler;
@@ -15,18 +16,25 @@ import java.util.Objects;
 @Getter
 @Setter
 
-public class Player extends Entity{
+public class Player extends Entity {
 
     private String imagePath;
     private BufferedImage up1, up2, left1, left2, right1, right2, down1, down2;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
-        super(EntityConstants.DEFAULT_PLAYER_X, EntityConstants.DEFAULT_PLAYER_Y, EntityConstants.DEFAULT_PLAYER_SPEED, gamePanel, keyHandler);
+        super(
+                EntityConstants.DEFAULT_PLAYER_X,
+                EntityConstants.DEFAULT_PLAYER_Y,
+                EntityConstants.DEFAULT_PLAYER_SPEED,
+                new Rectangle(8, 16, 32, 32),
+                gamePanel,
+                keyHandler
+        );
         imagePath = EntityConstants.DEFAULT_PLAYER_RESOURCES_PATH;
         readEntityImages();
         setDirection("DOWN");
-        setXPosition(GameConstants.screenWidth / 2 - (GameConstants.tileSize/2));
-        setYPosition(GameConstants.screenHeight/2 - (GameConstants.tileSize/2));
+        setXPosition(GameConstants.SCREEN_WIDTH / 2 - (GameConstants.TILE_SIZE /2));
+        setYPosition(GameConstants.SCREEN_HEIGHT /2 - (GameConstants.TILE_SIZE /2));
     }
 
     @Override
@@ -53,35 +61,59 @@ public class Player extends Entity{
     public void draw(Graphics2D g2) {
         BufferedImage entityImage = getEntityImage(direction);
         g2.drawImage(entityImage, getXPosition(), getYPosition(), getTileSize(), getTileSize(), null);
+        if(gamePanel.gameMode.equals(GameConstants.GAME_MODE_DEV)) renderCollisionArea(g2);
     }
 
     @Override
     public void handleInput() {
-        // Our 2D game cannot allow characters to move diagonally
-        // If this is to be changed, convert all ifs to else ifs
-        if(keyHandler.isPressed()) frameCounter++;
+
+        collision = false;
+
+        updateEntityFrame();
+        updateDirection();
+        updatePosition();
+
+    }
+
+    private void updateDirection() {
+        if(keyHandler.isUpPressed()) {
+            direction = EntityConstants.DIRECTION_UP;
+        }
+        else if(keyHandler.isDownPressed()) {
+            direction = EntityConstants.DIRECTION_DOWN;
+        }
+        else if(keyHandler.isRightPressed()) {
+            direction = EntityConstants.DIRECTION_RIGHT;
+        }
+        else if(keyHandler.isLeftPressed()) {
+            direction = EntityConstants.DIRECTION_LEFT;
+        }
+    }
+
+    private void updatePosition() {
+        if(CollisionChecker.collisionChecker(this )) return;
 
         if(keyHandler.isUpPressed()) {
             setWorldY(getWorldY() - getSpeed());
-            direction = "UP";
         }
         else if(keyHandler.isDownPressed()) {
             setWorldY(getWorldY() + getSpeed());
-            direction = "DOWN";
         }
         else if(keyHandler.isRightPressed()) {
             setWorldX(getWorldX() + getSpeed());
-            direction = "RIGHT";
         }
         else if(keyHandler.isLeftPressed()) {
             setWorldX(getWorldX() - getSpeed());
-            direction = "LEFT";
         }
+    }
 
+    private void updateEntityFrame() {
+        if(keyHandler.isPressed()) frameCounter++;
         if(frameCounter == 10) {
             changeImage();
             frameCounter = 0;
         }
+
     }
 
     @Override
